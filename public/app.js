@@ -188,7 +188,9 @@ function makeBotMove() {
 
 // Socket.IO for online multiplayer
 function initSocketIO() {
-    socket = io();
+    socket = io({
+        path: '/api/socketio'
+    });
     
     socket.on('connect', () => {
         connectionStatus.textContent = 'Connected';
