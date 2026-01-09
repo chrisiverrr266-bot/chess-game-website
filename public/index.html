@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game - Play Online or Against AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="game-header">
+                <div class="logo-section">
+                    <svg class="chess-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L12 6M8 6L16 6M9 10L15 10M10 14L14 14M8 18L16 18M6 22L18 22M18 22C18 20 17 18 17 18L7 18C7 18 6 20 6 22"/>
+                    </svg>
+                    <div>
+                        <h1 class="game-title">Chess Game</h1>
+                        <p class="creator">Made by Chris Iver</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-card">
+                <h2 class="menu-title">Choose Your Mode</h2>
+                <div class="mode-buttons">
+                    <button class="mode-btn" id="bot-mode-btn">
+                        <div class="mode-icon">🤖</div>
+                        <div class="mode-info">
+                            <h3>Play vs Bot</h3>
+                            <p>Challenge the Stockfish AI engine</p>
+                        </div>
+                    </button>
+                    <button class="mode-btn" id="online-mode-btn">
+                        <div class="mode-icon">🌐</div>
+                        <div class="mode-info">
+                            <h3>Play Online</h3>
+                            <p>Play with friends in real-time</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="credits-card">
+                <h3 class="credits-title">Built With</h3>
+                <div class="credits-grid">
+                    <a href="https://github.com/jhlywa/chess.js" target="_blank" class="credit-item">
+                        <span class="credit-name">chess.js</span>
+                        <span class="credit-desc">Game logic & validation</span>
+                    </a>
+                    <a href="https://github.com/oakmac/chessboardjs" target="_blank" class="credit-item">
+                        <span class="credit-name">chessboard.js</span>
+                        <span class="credit-desc">Interactive board UI</span>
+                    </a>
+                    <a href="https://github.com/lichess-org/stockfish.js" target="_blank" class="credit-item">
+                        <span class="credit-name">Stockfish.js</span>
+                        <span class="credit-desc">Chess engine AI</span>
+                    </a>
+                    <a href="https://socket.io/" target="_blank" class="credit-item">
+                        <span class="credit-name">Socket.IO</span>
+                        <span class="credit-desc">Real-time multiplayer</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-container">
+                <div class="game-sidebar">
+                    <button id="back-btn" class="icon-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        Back
+                    </button>
+
+                    <div class="game-info-card">
+                        <h3 id="game-mode-title">Game Mode</h3>
+                        <div id="game-status" class="status">White to move</div>
+                        
+                        <div id="bot-controls" class="controls" style="display: none;">
+                            <label class="control-label">AI Difficulty</label>
+                            <select id="difficulty" class="select-input">
+                                <option value="5">Easy (Depth 5)</option>
+                                <option value="10" selected>Medium (Depth 10)</option>
+                                <option value="15">Hard (Depth 15)</option>
+                                <option value="20">Expert (Depth 20)</option>
+                            </select>
+                        </div>
+
+                        <div id="online-controls" class="controls" style="display: none;">
+                            <div class="online-status">
+                                <span class="status-dot"></span>
+                                <span id="connection-status">Connecting...</span>
+                            </div>
+                            <div id="room-info" style="display: none;">
+                                <label class="control-label">Room Code</label>
+                                <div class="code-display">
+                                    <code id="room-code"></code>
+                                    <button id="copy-code-btn" class="copy-btn">Copy</button>
+                                </div>
+                            </div>
+                            <button id="create-room-btn" class="primary-btn">Create Room</button>
+                            <div class="or-divider">or</div>
+                            <input type="text" id="join-room-input" class="text-input" placeholder="Enter room code">
+                            <button id="join-room-btn" class="primary-btn">Join Room</button>
+                        </div>
+                    </div>
+
+                    <div class="move-history-card">
+                        <h3>Move History</h3>
+                        <div id="move-history" class="move-list"></div>
+                    </div>
+
+                    <button id="reset-btn" class="danger-btn">New Game</button>
+                </div>
+
+                <div class="board-wrapper">
+                    <div id="myBoard" class="chess-board"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
